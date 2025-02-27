@@ -3,16 +3,20 @@ const express = require('express');
 
 
 const connectDB = require('./config/db');
-const { getItems } = require('./controllers/itemcontroler');
-const {simpleController} =require('./controllers/rateLimitController')
+const { itemRoutes } = require('./routes/itemRoutes');
+const {rateLimitRoute} =require('./routes/rateLimitRoutes');
+const {authRoutes}= require('./routes/authRoutes')
 
 dotenv.config();
 connectDB();
 const app = express();
 app.use(express.json());
 
-app.use('/api/item', getItems)
+app.use('/api/item', itemRoutes)
 
-app.use('/api/limit', simpleController)
+app.use('/api/limit', rateLimitRoute)
+
+app.use('/api/auth', authRoutes);
+
 
 module.exports = app;
